@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("server")
+}
+
+type Image {
+  color     String
+  colorCode String
+  image     String
+}
+
+enum Role {
+  userj
+  admin
+  seller
+}
+
+model orders {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  Product   Product?  @relation(fields: [productId], references: [id])
+  productId String?   @db.ObjectId
+  address   Address[]
+}
+
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  User        User?    @relation(fields: [userId], references: [id])
+  name        String
+  price       Int
+  inStock     Boolean
+  category    String
+  description String
+  brand       String
+  images      Image[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String?  @db.ObjectId
+  reviews     Revies[]
+  orders      orders[]
+}
+
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String    @unique
+  hashedPassword String
+  role           String
+  avatar         String?
+  createdAt      DateTime  @default(now())
+  updateAt       DateTime  @updatedAt
+  accounts       Account[]
+  address        Address[]
+  Revies         Revies[]
+  emailVerified  DateTime?
+  products       Product[]
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  acces_token       String? @db.String
+  expires_at        Int
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String? @db.String
+  userId            String? @db.ObjectId
+  User              User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Revies {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @db.ObjectId
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+}
+
+type Address {
+  postal_code String
+  city        String
+  near        String
+  district    String
+  state       String
+  Country     country
+}
+
+type CartProducs {
+  id          String
+  name        String
+  description String
+  price       Int
+  qauntity    Int
+  Stock       Boolean
+  brand       String
+  cateGory    String
+}
+
+enum country {
+  India
+  // Pakistan
+  // Nepal
+  // Afghanistan
+  // Korea
+}
