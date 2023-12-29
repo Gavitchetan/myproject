@@ -85,7 +85,7 @@ const AddProducts = () => {
         setCustomValue('images', ImagesState)
         console.log('uploaded', ImagesState);
 
-    }, [ImagesState, addImagesTostate, removeImageFromState, onsubmit])
+    }, [ImagesState, addImagesTostate, removeImageFromState])
 
 
     useEffect(() => {
@@ -189,7 +189,7 @@ const AddProducts = () => {
 
                     <section className="  flex flex-col gap-3">
 
-                        <Input required={true} disabled={isLoading} label='Name' id='name' register={register} errors={errors} placeHolder='John Doe' />
+                        <Input required={true} disabled={isLoading} label='Name' id='name' register={register} errors={errors} placeHolder='Sample Name' />
 
                         <Textarea required disabled={isLoading} label='description' id='description' register={register} errors={errors} />
                         <Input required={true} disabled={isLoading} label='Price' type='number' id='price' register={register} errors={errors} placeHolder='100 usd' />

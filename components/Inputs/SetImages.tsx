@@ -27,7 +27,7 @@ const SetImages: React.FC<setImageProps> = ({ item, addImageToState, removeImage
             setFile(image)
             addImageToState({ ...item, image: image })
         },
-        [addImageToState, item],
+        [addImageToState],
     )
 
     const OnchangeInput = (e: ChangeEvent<HTMLInputElement>) => {

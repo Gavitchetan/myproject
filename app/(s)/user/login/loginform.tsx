@@ -22,7 +22,7 @@ const Loginform: React.FC<loginformInterfa> = ({ user }) => {
 
         }
         router.refresh
-    }, [user])
+    }, [isLoading])
     const { register, watch, handleSubmit, setValue, formState: { errors } } = useForm<FieldValues>({
         defaultValues: {
             email: '',
